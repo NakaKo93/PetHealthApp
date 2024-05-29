@@ -199,40 +199,35 @@ class PetController extends Controller
         // リクエストデータを変更
         $data = $request->all();
         $data['gender'] = filter_var($request->input('gender'), FILTER_VALIDATE_BOOLEAN);
+        $data['photo_address'] = $request->file('photo_address')->store('public/movable/img');
 
         //バリデーション
         $validator = Validator::make($data,[
         'photo_address' => 'nullable|url',
         'name' => [
-            'required',
+            'nullable',
             'string',
             'max:100',
             Rule::unique('pets')->where(function ($query) use ($userId) {
                 return $query->where('user_id', $userId);
             })
         ],
-        'age' => 'required|integer|min:0',
-        'gender' => 'required|boolean',
-        'type' => 'required|string|max:100',
-        'birth' => 'required|date',
-        'adoption' => 'required|date',
+        'age' => 'nullable|integer|min:0',
+        'gender' => 'nullable|boolean',
+        'type' => 'nullable|string|max:100',
+        'birth' => 'nullable|date',
+        'adoption' => 'nullable|date',
         'memo' => 'nullable|string'
         ],[
         'photo_address.url' => '写真を保存できませんでした',
         'name.unique' => 'この名前のペットはすでに登録してあります',
-        'name.required' => '名前を入力してください',
         'name.string' => '文字列で名前を入力してください',
         'name.max' => '名前は最大100文字までです',
-        'age.required' => '年齢を入力してください',
         'age.integer' => '整数で年齢を入力してください',
         'age.min' => '年齢は0歳以上で入力してください',
-        'gender.required' => '性別を入力してください',
-        'type.required' => '種類を入力してください',
         'type.string' => '文字列で入力してください',
         'type.max' => '種類は最大100文字までです。',
-        'birth.required' => '誕生日を入力してください',
         'birth.date' => '有効な日付を入力してください',
-        'adoption.required' => '向かい入れた日を入力してください',
         'adoption.date' => '有効な日付を入力してください',
         'memo.string' => '文字列で入力してください'
         ]);

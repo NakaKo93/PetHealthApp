@@ -16,31 +16,8 @@
     <title>Vet edit</title>
 </head>
 <body class="bg-main">
-    <div class="menu-box flex-vert bg-menu-vet-1">
-        <div class="mt-2 mb-auto">
-            @foreach ($userList as $user)
-            <div class="my-2 pb-2 me-30px menu-user-section bg-white">
-                    <p class="ms-1 py-2 fs-4 fw-bold txt-gray">{{ $user['name'] }}</p>
-                    @foreach ($petList as $pet)
-                        @if ($pet['user_id'] === $user['user_id'])
-                            <a href="{{ route('vet.home', ['petId' => $pet->pet_id]) }}" class="px-3 pb-2 flex-bes">
-                                <div class="menu-circle bg-pic-ex"></div>
-                                <div class="menu-info fs-4 fw-bold txt-gray">
-                                    {{ $pet['name'] }}
-                                </div>
-                            </a>
-                        @endif
-                    @endforeach
-                </div>
-            @endforeach
-        </div>
-        <div class="flex-vert text-center bg-menu-vet-3 pe-20px">
-            <a href="{{ route('vet.profile') }}" class="mx-auto my-2 w-75 fs-4 text-white">会員情報</a>
-            <a href="{{ route('vet.logout') }}" class="mx-auto mb-2 w-75 fs-4 text-white">ログアウト</a>
-        </div>
-        <div class="deco bg-main main-shadow"></div>
-    </div>
-    <div class="main-box flex-vert bg-main">
+    @include('header.vet.main')
+    <div class="main-shadow main-box flex-vert bg-main">
         <div class="mx-auto mb-auto">
             <h1 class="txt-vet-M fw-bold display-4 text-center">獣医師<br>会員情報編集</h1>
         </div>
@@ -102,8 +79,8 @@
             </div>
         </form>
     </div>
-    <div class="pic-box bg-main">
-        <img src="{{ asset('static/img/public_cat.png') }}" class="pic main-shadow" alt="top_cat">
+    <div class="pic-box bg-white main-shadow">
+        <img src="{{ asset('static/img/public_cat.png') }}" class="pic" alt="top_cat">
     </div>
 </body>
 </html>

@@ -16,15 +16,9 @@
     <title>Vet Login</title>
 </head>
 
-<body class="bg-main"> 
-    <div class="pre-menu-box flex-vert bg-menu-user-1">
-        <div class="bg-menu-user-2 mt-auto py-5">
-        </div>
-        <div class="bg-menu-user-3 py-5">
-        </div>
-        <div class="deco bg-main main-shadow"></div>
-    </div>
-    <div class="pre-main-box flex-vert bg-main">
+<body class="bg-main">
+    @include('header.user.pre')
+    <div class="main-shadow pre-main-box flex-vert bg-main">
         <div class="mx-auto mb-auto">
             <h1 class="txt-user-M fw-bold display-4">ログイン</h1>
         </div>
@@ -63,8 +57,8 @@
             <a class="py-1 fs-4 rounded-3 btn-accent-action" href="{{ route('user.create') }}">新規登録</a>
         </div>
     </div>
-    <div class="pre-pic-box bg-main">
-        <img src="{{ asset('static/img/public_cat.png') }}" class="pic main-shadow" alt="top_cat">
+    <div class="pre-pic-box bg-white main-shadow">
+        <img src="{{ asset('static/img/public_cat.png') }}" class="pic" alt="top_cat">
     </div>
 </body>
 </html>

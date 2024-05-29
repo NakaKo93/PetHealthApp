@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 
 use App\Models\User;
+use App\Models\Vet;
 use App\Models\Chat;
 use App\Models\Pet;
 use App\Models\PetsHealth;
@@ -183,12 +184,15 @@ class UserProcessController extends Controller
     /**
      * メッセージ送信処理
      * 
-     * @param Request $request ユーザー情報
-     * @param string $petId ペットID
-     * @param string $vetId 獣医師ID
+     * @param Request $request json形式のデータ
+     * {
+     *     "petId": "string", // ペットID
+     *     "vetId": "string", // 獣医師ID
+     *     "message": "string" // メッセージ
+     * }
      * @return 
      */
-    public function sendProcess(Request $request, $vetId, $petId)
+    public function sendProcess(Request $request)
     {
         //ログインしていなければログインページへ
         $userId = session('user_id');
@@ -197,14 +201,22 @@ class UserProcessController extends Controller
             return view('user.login', compact('errorMessages'));
         }
 
-        //獣医師データが入力されていない場合エラーを出す
+        // JSONデータを取得
+        $data = $request->json()->all();
+        $petId = $data['petId'];
+        $vetId = $data['vetId'];
+        $message = $data['message'];
+
+        //獣医師IDが入力されていない場合エラーを出す
         if ($vetId == null){
-            return redirect()->back()
-                            ->with('errorMessages', '獣医師データの取得に失敗しました');
+            return response()->json([
+                'status' => 'error', 
+                'errorMessages' => '獣医師データの取得に失敗しました'
+            ]);
         }
 
         //バリデーション
-        $validator = Validator::make($request->all(), [
+        $validator = Validator::make($data, [
             'message' => 'required|string|max:1000'
         ],[
             'message.required' => 'メッセージを入力してください',
@@ -214,9 +226,10 @@ class UserProcessController extends Controller
 
         //バリデーション失敗
         if ($validator->fails()) {
-            return redirect()->back()
-                            ->withErrors($validator)
-                            ->withInput();
+            return response()->json([
+                'status' => 'error', 
+                'errors' => $validator->errors()
+            ]);
         }
         
         //登録
@@ -227,17 +240,28 @@ class UserProcessController extends Controller
         //登録失敗
         if($sendChat == false)
         {
-            return redirect()->back()->with('errorMessages', 'チャットの作成に失敗しました');
+            return response()->json([
+                'status' => 'error', 
+                'errors' => 'チャットの作成に失敗しました'
+            ]);
         }
 
-        //ペットの情報を取得
-        if($petId == null)
+        //メッセージの取得
+        $chatsList = Chat::FindMessage($userId);
+        if($chatsList == false)
         {
-            $petId = Pet::FindFirstPet($userId);
+            $chatsList = null;
         }
+        
+        //獣医師の名前を取得
+        $vetName = Vet::where('vet_id', $vetId)->value('name');
 
-        // ホームへ
-        return redirect()->route('user.home', ['petId' => $petId]);
+        // メッセージデータを返す
+        return response()->json([
+            'status' => 'success', 
+            'vetName' => $vetName,
+            'chatsList' => $chatsList
+        ]);
     }
 
     //有料会員処理

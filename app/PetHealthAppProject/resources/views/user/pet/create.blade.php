@@ -17,18 +17,12 @@
 </head>
 <body>
 <body class="bg-main">
-    <div class="pre-menu-box flex-vert bg-menu-user-1">
-        <div class="bg-menu-user-2 mt-auto py-5">
-        </div>
-        <div class="bg-menu-user-3 py-5">
-        </div>
-        <div class="deco bg-main main-shadow"></div>
-    </div>
-    <div class="pre-main-box flex-vert bg-main">
+    @include('header.user.pre')
+    <div class="main-shadow pre-main-box flex-vert bg-main">
         <div class="mx-auto mb-auto">
             <h1 class="txt-user-M fw-bold display-4">ペット登録</h1>
         </div>
-        <form class="flex-vert mx-auto w-75 h-75" action="{{ route('user.pet.create-process') }}" method="POST">
+        <form class="flex-vert mx-auto w-75 h-75" action="{{ route('user.pet.create-process') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="flex-vert">
                 <label for="photo_address" class="mx-auto mb-1 fs-6 txt-user-S upload-button bg-pic-ex"></label>
@@ -122,8 +116,8 @@
             </div>
         </form>
     </div>
-    <div class="pre-pic-box bg-main">
-        <img src="{{ asset('static/img/public_cat.png') }}" class="pic main-shadow" alt="top_cat">
+    <div class="pre-pic-box bg-white main-shadow">
+        <img src="{{ asset('static/img/public_cat.png') }}" class="pic" alt="top_cat">
     </div>
 </body>
 </html>

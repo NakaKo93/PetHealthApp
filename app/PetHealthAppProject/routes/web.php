@@ -91,7 +91,7 @@ Route::prefix('user')->name('user.')->group(function () {
     )->name('premium-process');
 
     // メッセージ送信処理
-    Route::post('{vetId}/{petId}/send-process',
+    Route::post('/send-process',
         [UserProcessController::class, 'sendProcess']
     )->name('send-process');
 
@@ -161,7 +161,7 @@ Route::prefix('vet')->name('vet.')->group(function () {
     )->name('edit');
 
     // メッセージ送信処理
-    Route::post('{userId}/{petId}/send-process',
+    Route::post('/send-process',
         [VetProcessController::class, 'sendProcess']
     )->name('send-process');
 
