@@ -12,35 +12,14 @@
     <!-- BootstrapのJSの読み込み -->
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js" integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS" crossorigin="anonymous"></script>
+    <!-- オリジナルなCSSの読み込み -->
+        <script src="{{asset('/js/vet/chat.js')}}"></script>
 
-    <title>User home</title>
+    <title>Vet home</title>
 </head>
 <body class="bg-main">
-    <div class="menu-box flex-vert bg-menu-vet-1">
-        <div class="mt-2 mb-auto">
-            @foreach ($userList as $user)
-                <div class="my-2 pb-2 me-30px menu-user-section bg-white">
-                    <p class="ms-1 py-2 fs-4 fw-bold txt-gray">{{ $user['name'] }}</p>
-                    @foreach ($petList as $pet)
-                        @if ($pet['user_id'] === $user['user_id'])
-                            <a href="{{ route('vet.home', ['petId' => $pet->pet_id]) }}" class="px-3 py-2 flex-bes @if($pet->pet_id == $petDetails->pet_id) bg-menu-vet-3 menu-selected main-shadow txt-white @else txt-gray @endif">
-                                <div class="menu-circle bg-pic-ex"></div>
-                                <div class="menu-info fs-4 fw-bold">
-                                    {{ $pet['name'] }}
-                                </div>
-                            </a>
-                        @endif
-                    @endforeach
-                </div>
-            @endforeach
-        </div>
-        <div class="flex-vert text-center bg-menu-vet-3 pe-20px">
-            <a href="{{ route('vet.profile') }}" class="mx-auto my-2 w-75 fs-4 text-white">会員情報</a>
-            <a href="{{ route('vet.logout') }}" class="mx-auto mb-2 w-75 fs-4 text-white">ログアウト</a>
-        </div>
-        <div class="deco bg-main main-shadow"></div>
-    </div>
-    <div class="home-main-box flex-vert bg-main">
+    @include('header.vet.main')
+    <div class="main-shadow home-main-box flex-vert bg-main">
         <div class="radius-caontent bg-content">
             <div class="flex-bes">
                 <h1 class="txt-accent-M fw-bold fs-1">プロフィール</h1>
@@ -270,7 +249,7 @@
                     </div>
                 </div>
             @else
-                <div class="flex-vert m-3">
+                <div id='chat-box' class="flex-vert m-3">
                     @if($chatsList)
                         @foreach ($chatsList as $chat)
                             @if($chat['from_vet'])
@@ -298,7 +277,7 @@
                     <p class="mx-auto txt-gray">メッセージはありません</p>
                     @endif
                 </div>
-                <form class="flex-bes px-3 py-2 bg-pic-ex message-form-deco" action="{{ route('vet.send-process', ['petId' => $petDetails->pet_id, 'userId' => $userId]) }}" method="POST">
+                <form id ="chat-form" class="flex-bes px-3 py-2 bg-pic-ex message-form-deco" action="{{ route('vet.send-process', ['petId' => $petDetails->pet_id, 'userId' => $userId]) }}" method="POST">
                     @csrf
                     <div class="flex-grow">
                         <textarea class="message-form-inp W-100 py-auto" id="message" name="message">{{ old('message', '') }}</textarea>

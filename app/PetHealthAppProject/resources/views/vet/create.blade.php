@@ -16,14 +16,8 @@
     <title>Vet Create</title>
 </head>
 <body class="bg-main">
-    <div class="pre-menu-box flex-vert bg-menu-vet-1">
-        <div class="bg-menu-vet-2 mt-auto py-5">
-        </div>
-        <div class="bg-menu-vet-3 py-5">
-        </div>
-        <div class="deco bg-main main-shadow"></div>
-    </div>
-    <div class="pre-main-box flex-vert bg-main">
+    @include('header.vet.pre')
+    <div class="main-shadow pre-main-box flex-vert bg-main">
         <div class="mx-auto mb-auto">
             <h1 class="txt-vet-M fw-bold display-4 text-center">獣医師<br>新規会員登録</h1>
         </div>
@@ -77,8 +71,8 @@
             <a class="py-1 fs-4 rounded-3 btn-accent-action" href="{{ route('vet.login') }}">ログイン</a>
         </div>
     </div>
-    <div class="pre-pic-box bg-main">
-        <img src="{{ asset('static/img/public_cat.png') }}" class="pic main-shadow" alt="top_cat">
+    <div class="pre-pic-box bg-white main-shadow">
+        <img src="{{ asset('static/img/public_cat.png') }}" class="pic" alt="top_cat">
     </div>
 </body>
 </html>

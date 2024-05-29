@@ -224,12 +224,15 @@ class VetProcessController extends Controller
     /**
      * メッセージ送信処理
      * 
-     * @param Request $request ユーザー情報
-     * @param string $petId ペットID
-     * @param string $userId ユーザーID
+     * @param Request $request json形式のデータ
+     * {
+     *     "petId": "string", // ペットID
+     *     "userId": "string", // ユーザーID
+     *     "message": "string" // メッセージ
+     * }
      * @return 
      */
-    public function sendProcess(Request $request, $userId, $petId)
+    public function sendProcess(Request $request)
     {
         //ログインしていなければログインページへ
         $vetId = session('vet_id');
@@ -238,14 +241,22 @@ class VetProcessController extends Controller
             return view('vet.login', compact('errorMessages'));
         }
 
-        //ユーザーデータが入力されていない場合エラーを出す
+        // JSONデータを取得
+        $data = $request->json()->all();
+        $petId = $data['petId'];
+        $userId = $data['userId'];
+        $message = $data['message'];
+
+        //ユーザーIDが入力されていない場合エラーを出す
         if ($userId == null){
-            return redirect()->back()
-                            ->with('errorMessages', 'ユーザーデータの取得に失敗しました');
+            return response()->json([
+                'status' => 'error', 
+                'errorMessages' => '獣医師データの取得に失敗しました'
+            ]);
         }
 
         //バリデーション
-        $validator = Validator::make($request->all(), [
+        $validator = Validator::make($data, [
             'message' => 'required|string|max:1000'
         ],[
             'message.required' => 'メッセージを入力してください',
@@ -255,9 +266,10 @@ class VetProcessController extends Controller
 
         //バリデーション失敗
         if ($validator->fails()) {
-            return redirect()->back()
-                            ->withErrors($validator)
-                            ->withInput();
+            return response()->json([
+                'status' => 'error', 
+                'errors' => $validator->errors()
+            ]);
         }
 
         //登録
@@ -268,18 +280,28 @@ class VetProcessController extends Controller
         //登録失敗
         if($sendChat == false)
         {
-            return redirect()->back()
-                            ->with('errorMessages', '登録に失敗しました');
+            return response()->json([
+                'status' => 'error', 
+                'errors' => 'チャットの作成に失敗しました'
+            ]);
         }
 
-        //ペットの情報を取得
-        if($petId == null)
+        //メッセージの取得
+        $chatsList = Chat::FindMessage($userId);
+        if($chatsList == false)
         {
-            $petId = Pet::FindFirstPet($userId);
+            $chatsList = null;
         }
-
-        // ホームへ
-        return redirect()->route('vet.home', ['petId' => $petId]);
+        
+        //ユーザーの名前を取得
+        $userName = User::where('user_id', $userId)->value('name');
+        
+        // メッセージデータを返す
+        return response()->json([
+            'status' => 'success', 
+            'userName' => $userName,
+            'chatsList' => $chatsList
+        ]);
     }
 
     //獣医師情報消去処理

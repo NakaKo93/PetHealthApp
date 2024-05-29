@@ -16,19 +16,61 @@
     <title>Demo</title>
 
 <body>
-    <div class="pre-menu-box flex-vert bg-menu-user-1">
-        <div class="bg-menu-user-2 mt-auto py-5">
+<div class="menu-box flex-vert bg-menu-user-1">
+        <div class="mt-2 mb-auto">
+            <a class="px-3 py-2 flex-bes me-30px bg-menu-user-3 menu-selected main-shadow txt-white">
+                <div class="menu-circle bg-pic-ex"></div>
+                <div class="menu-info">
+                    <p class="fs-4 fw-bold">あか</p>
+                        <p class="fs-7">
+                            <span>今日の</span>
+                            <span>健康状態を</span>
+                            <span>記入しましょう</span>
+                        </p>
+                </div>
+            </a>
+            <a class="px-3 py-2 flex-bes txt-gray">
+                <div class="menu-circle bg-pic-ex"></div>
+                <div class="menu-info">
+                    <p class="fs-4 fw-bold">あお</p>
+                        <p class="fs-7">
+                            <span>今日の</span>
+                            <span>健康状態を</span>
+                            <span>記入しましょう</span>
+                        </p>
+                </div>
+            </a>
+            <a class="px-3 py-2 flex-bes txt-gray">
+                <div class="menu-circle bg-pic-ex"></div>
+                <div class="menu-info">
+                    <p class="fs-4 fw-bold">きいろ</p>
+                </div>
+            </a>
         </div>
-        <div class="bg-menu-user-3 py-5">
+        <div class="py-2 text-center bg-menu-user-2 pe-20px">
+            <a class="m-auto w-75 fs-4 text-white">
+                <i class="fs-5 bi bi-plus-circle-fill"></i>
+                追加
+            </a>
+        </div>
+        <div class="flex-vert text-center bg-menu-user-3 pe-20px">
+            <a class="mx-auto my-2 w-75 fs-4 text-white">会員情報</a>
+            <a class="mx-auto mb-2 w-75 fs-4 text-white">ログアウト</a>
         </div>
         <div class="deco bg-main main-shadow"></div>
     </div>
-    <div class="pre-main-box flex-vert bg-main">
+    <div class="main-box flex-vert bg-main">
         <div class="radius-caontent bg-content">
-            <p>{{$userId}}</p>
-            <p>{{$vetId}}</p>
-            <p>{{$chatData['message']}}</p>
-            <p>{{$fromVet ? 'Yes' : 'No' }}</p>
+            <p>ddddddddddddddddddddd</p>
+            <p>ddddddddddddddddddddd</p>
+            <p>ddddddddddddddddddddd</p>
+            <p>ddddddddddddddddddddd</p>
+            <p>ddddddddddddddddddddd</p>
+            <p>ddddddddddddddddddddd</p>
+            <p>ddddddddddddddddddddd</p>
+            <p>ddddddddddddddddddddd</p>
+            <p>ddddddddddddddddddddd</p>
+            <p>ddddddddddddddddddddd</p>
         </div>
         <div class="m-middle radius-caontent bg-content">
             <p>ddddddddddddddddddddd</p>
@@ -55,8 +97,8 @@
             <p>ddddddddddddddddddddd</p>
         </div>
     </div>
-    <div class="pre-pic-box bg-main">
-        <img src="{{ asset('static/img/public_cat.png') }}" class="pic main-shadow" alt="top_cat">
+    <div class="pic-box bg-white main-shadow">
+        <img src="{{ asset('static/img/public_cat.png') }}" class="pic" alt="top_cat">
     </div>
 </body>
 </html>
