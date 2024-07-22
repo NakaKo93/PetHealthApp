@@ -18,16 +18,16 @@ class DatabaseSeeder extends Seeder
     {
         $user1 = User::create([
             [
-                'name' => 'test ichirou',
-                'email'     => Str::random(10).'@gmail.com',
-                'password'  => Hash::make('password'),
+                'name' => '山田 一郎',
+                'email'     => '1@gmail.com',
+                'password'  => '111111',
                 'status' => true
             ]
         ]);
 
         $user2 = User::create([
             [
-                'name' => 'test zirou',
+                'name' => '高橋 次郎',
                 'email'     => Str::random(10).'@gmail.com',
                 'password'  => Hash::make('password'),
                 'status' => false
@@ -38,13 +38,13 @@ class DatabaseSeeder extends Seeder
             [
                 'user_id'   =>  $user1->id,
                 'photo_address'     => 'PetHealthAppProject/public/'.Str::random(10),
-                'name'  => 'ichi',
+                'name'  => 'たいよう',
                 'age' => 3,
                 'gender' => true,
-                'type'     => 'mikeneko',
+                'type'     => '柴犬',
                 'birth'  => '2020/01/01',
                 'adoption' => '2022/02/02',
-                'memo' => 'hellow'
+                'memo' => 'こんにちは'
             ]
         ]);
 
@@ -52,10 +52,24 @@ class DatabaseSeeder extends Seeder
             [
                 'user_id'   =>  $user2->id,
                 'photo_address'     => 'PetHealthAppProject/public/'.Str::random(10),
-                'name'  => 'ni',
+                'name'  => 'ふく',
                 'age' => 5,
                 'gender' => false,
-                'type'     => 'sibainu',
+                'type'     => 'スコティッシュフォールド',
+                'birth'  => '2023/03/03',
+                'adoption' => '2024/04/04',
+                //'memo' => ''
+            ]
+        ]);
+
+        $pets2 = User::create([
+            [
+                'user_id'   =>  $user2->id,
+                'photo_address'     => 'PetHealthAppProject/public/'.Str::random(10),
+                'name'  => 'ふく',
+                'age' => 5,
+                'gender' => false,
+                'type'     => 'スコティッシュフォールド',
                 'birth'  => '2023/03/03',
                 'adoption' => '2024/04/04',
                 //'memo' => ''

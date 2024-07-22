@@ -112,7 +112,7 @@ class PetController extends Controller
             return view('user.login', compact('errorMessages'));
         }
 
-        // リクエストデータを変更
+        // リクエストデータの編集
         $data = $request->all();
         $data['gender'] = filter_var($request->input('gender'), FILTER_VALIDATE_BOOLEAN);
 
@@ -199,7 +199,13 @@ class PetController extends Controller
         // リクエストデータを変更
         $data = $request->all();
         $data['gender'] = filter_var($request->input('gender'), FILTER_VALIDATE_BOOLEAN);
-        $data['photo_address'] = $request->file('photo_address')->store('public/movable/img');
+        // 画像の保存
+        $uploadedFile = $request->file('photo_address');
+        $destinationPath = 'movable/img';
+        $fileEx = $uploadedFile->getClientOriginalExtension();
+        $fileName = $userId.'_'.$petId.'.'.$fileEx;
+        $uploadedFile->storeAs($destinationPath, $fileName, 'public');
+        $data['photo_address'] = $fileName;
 
         //バリデーション
         $validator = Validator::make($data,[

@@ -5,14 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- BootstrapのCSSの読み込み -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
     <!-- オリジナルなCSSの読み込み -->
         <link href="{{asset('/css/app.css')}}" rel="stylesheet">
     <!-- BootstrapのJSの読み込み -->
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js" integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS" crossorigin="anonymous"></script>
-    
+    <!-- オリジナルなJSの読み込み -->
+        <script src="{{asset('/js/user/photo.js')}}"></script>
+
     <script>
         function confirmPetDeletion(event) {
             // 確認ダイアログを表示
@@ -42,6 +44,16 @@
                             <p class="txt-error"> {{ $message }} </p>
                         @endforeach
                     @endif
+                    <div id="photo-popup" class="VHW-100 z-3 d-none">
+                        <div id="photo-flame">
+                            <p>画像切り抜き</p>
+                            <img>
+                            <div>
+                                <p class="popup-button">キャンセル</p>
+                                <p class="popup-button">切り取り</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div>
                     <label for="name" class="my-1 fs-6 txt-user-S">名前</label>
